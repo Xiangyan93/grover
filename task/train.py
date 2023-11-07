@@ -57,12 +57,11 @@ def train(epoch, model, data, loss_func, optimizer, scheduler,
 
     mol_collator = MolCollator(shared_dict=shared_dict, args=args)
 
-    num_workers = 4
     if type(data) == DataLoader:
         mol_loader = data
     else:
         mol_loader = DataLoader(data, batch_size=args.batch_size, shuffle=True,
-                            num_workers=num_workers, collate_fn=mol_collator)
+                            num_workers=args.num_workers, collate_fn=mol_collator)
 
     for _, item in enumerate(mol_loader):
         _, batch, features_batch, mask, targets = item
@@ -174,7 +173,7 @@ def run_training(args: Namespace, time_start, logger: Logger = None) -> List[flo
         train_data = DataLoader(train_data,
                                 batch_size=args.batch_size,
                                 shuffle=shuffle,
-                                num_workers=10,
+                                num_workers=args.num_workers,
                                 collate_fn=mol_collator)
 
         # Run training
