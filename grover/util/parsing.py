@@ -392,6 +392,9 @@ def modify_train_args(args: Namespace):
         TEMP_DIR = TemporaryDirectory()
         args.save_dir = TEMP_DIR.name
 
+    if args.num_workers is None:
+        args.num_workers = 1
+
     args.cuda = not args.no_cuda and torch.cuda.is_available()
     del args.no_cuda
 
