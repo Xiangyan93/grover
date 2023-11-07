@@ -393,6 +393,8 @@ def load_data(args, debug, logger):
         val_data.set_targets(scaled_val_targets)
     else:
         scaler = None
+
+    save_splits(args, test_data, train_data, val_data)
     return features_scaler, scaler, shared_dict, test_data, train_data, val_data
 
 
