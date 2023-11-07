@@ -177,7 +177,7 @@ def add_finetune_args(parser: ArgumentParser):
                         help='Turn off scaling of features')
     parser.add_argument('--early_stop_epoch', type=int, default=1000, help='If val loss did not drop in '
                                                                            'this epochs, stop running')
-
+    parser.add_argument('--num_workers', type=int, default=1, help='number of workers for data loading')
     # Model arguments
     parser.add_argument('--ensemble_size', type=int, default=1,
                         help='Number of models for ensemble prediction.')
@@ -391,9 +391,6 @@ def modify_train_args(args: Namespace):
     else:
         TEMP_DIR = TemporaryDirectory()
         args.save_dir = TEMP_DIR.name
-
-    if args.num_workers is None:
-        args.num_workers = 1
 
     args.cuda = not args.no_cuda and torch.cuda.is_available()
     del args.no_cuda
